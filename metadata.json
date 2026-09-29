@@ -1,0 +1,6 @@
+{
+  "name": "Baliraja Krishi Mitra",
+  "description": "Comprehensive Marathi & English Agricultural Knowledge Portal for Farmers in Pune and Maharashtra.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
