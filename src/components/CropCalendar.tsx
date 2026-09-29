@@ -21,6 +21,22 @@ import {
 export const CropCalendar: React.FC = () => {
   const { lang, setLang, t } = useLanguage();
 
+  const getCropImage = (cropText: string) => {
+    const lower = cropText.toLowerCase();
+    if (lower.includes('ऊस') || lower.includes('sugar')) return '/images/sugarcane.jpg';
+    if (lower.includes('कांदा') || lower.includes('onion')) return '/images/onion.jpg';
+    if (lower.includes('डाळिंब') || lower.includes('pomegranate')) return '/images/pomegranate.jpg';
+    if (lower.includes('द्राक्ष') || lower.includes('grape')) return '/images/grapes.jpg';
+    if (lower.includes('टोमॅटो') || lower.includes('tomato')) return '/images/tomato.jpg';
+    if (lower.includes('सोयाबीन') || lower.includes('soybean')) return '/images/soybean.jpg';
+    if (lower.includes('गहू') || lower.includes('wheat')) return '/images/wheat.jpg';
+    if (lower.includes('बाजरी') || lower.includes('bajra') || lower.includes('millet')) return '/images/bajra.jpg';
+    if (lower.includes('अंजीर') || lower.includes('fig')) return '/images/fig.jpg';
+    if (lower.includes('झेंडू') || lower.includes('marigold')) return '/images/marigold.jpg';
+    if (lower.includes('आले') || lower.includes('हळद') || lower.includes('ginger') || lower.includes('turmeric')) return '/images/ginger_turmeric.jpg';
+    return null;
+  };
+
   // Initialize with current calendar month (1-indexed: 1 = Jan, 9 = Sep, etc.)
   const currentMonthIndex = new Date().getMonth() + 1;
   const [selectedMonthIndex, setSelectedMonthIndex] = useState<number>(currentMonthIndex);
@@ -260,12 +276,23 @@ export const CropCalendar: React.FC = () => {
                     </h4>
                   </div>
                   <ul className="space-y-2 text-xs sm:text-sm text-stone-700">
-                    {(t(selectedMonth.sowingCropsMr.join('@@'), selectedMonth.sowingCropsEn.join('@@'))).split('@@').map((crop, i) => (
-                      <li key={i} className="flex items-start gap-2 bg-emerald-50/50 p-2 rounded-lg border border-emerald-100/70">
-                        <span className="text-emerald-700 font-bold mt-0.5">•</span>
-                        <span>{crop}</span>
-                      </li>
-                    ))}
+                    {(t(selectedMonth.sowingCropsMr.join('@@'), selectedMonth.sowingCropsEn.join('@@'))).split('@@').map((crop, i) => {
+                      const cropImg = getCropImage(crop);
+                      return (
+                        <li key={i} className="flex items-center gap-2.5 bg-emerald-50/60 p-2 rounded-lg border border-emerald-100/70">
+                          {cropImg ? (
+                            <img
+                              src={cropImg}
+                              alt={crop}
+                              className="w-7 h-7 rounded-md object-cover border border-emerald-300/60 shrink-0"
+                            />
+                          ) : (
+                            <span className="text-emerald-700 font-bold ml-1">•</span>
+                          )}
+                          <span className="leading-snug">{crop}</span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
                 <div className="mt-4 pt-3 border-t border-stone-100 text-[11px] text-stone-500">
@@ -285,12 +312,23 @@ export const CropCalendar: React.FC = () => {
                     </h4>
                   </div>
                   <ul className="space-y-2 text-xs sm:text-sm text-stone-700">
-                    {(t(selectedMonth.harvestingCropsMr.join('@@'), selectedMonth.harvestingCropsEn.join('@@'))).split('@@').map((crop, i) => (
-                      <li key={i} className="flex items-start gap-2 bg-amber-50/50 p-2 rounded-lg border border-amber-100/70">
-                        <span className="text-amber-700 font-bold mt-0.5">•</span>
-                        <span>{crop}</span>
-                      </li>
-                    ))}
+                    {(t(selectedMonth.harvestingCropsMr.join('@@'), selectedMonth.harvestingCropsEn.join('@@'))).split('@@').map((crop, i) => {
+                      const cropImg = getCropImage(crop);
+                      return (
+                        <li key={i} className="flex items-center gap-2.5 bg-amber-50/60 p-2 rounded-lg border border-amber-100/70">
+                          {cropImg ? (
+                            <img
+                              src={cropImg}
+                              alt={crop}
+                              className="w-7 h-7 rounded-md object-cover border border-amber-300/60 shrink-0"
+                            />
+                          ) : (
+                            <span className="text-amber-700 font-bold ml-1">•</span>
+                          )}
+                          <span className="leading-snug">{crop}</span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
                 <div className="mt-4 pt-3 border-t border-stone-100 text-[11px] text-stone-500">

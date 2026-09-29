@@ -44,13 +44,41 @@ export const ModernTechniques: React.FC = () => {
               className="bg-stone-50 rounded-2xl border border-stone-200 p-6 flex flex-col justify-between hover:shadow-md transition-shadow"
             >
               <div>
-                <div className="w-10 h-10 rounded-xl bg-white border border-stone-200 flex items-center justify-center mb-4 shadow-xs">
-                  {getIcon(tech.id)}
+                {/* Real Technique Photography Banner */}
+                <div className="w-full h-36 mb-4 rounded-xl overflow-hidden relative border border-stone-200 group/item shadow-xs bg-stone-900">
+                  <img
+                    src={
+                      tech.id === 'drip_fertigation'
+                        ? '/images/drip.jpg'
+                        : tech.id === 'onion_storage_chawl'
+                        ? '/images/onion.jpg'
+                        : '/images/compost.jpg'
+                    }
+                    alt={t(tech.titleMr, tech.titleEn)}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover/item:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-stone-950/10 to-transparent pointer-events-none" />
+                  <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-xs text-white">
+                    <span className="font-semibold text-emerald-300 text-xs">
+                      {tech.id === 'drip_fertigation' && t('सूक्ष्म सिंचन व व्हेंचुरी', 'Micro Irrigation & Venturi')}
+                      {tech.id === 'onion_storage_chawl' && t('हवेशीर साठवणूक रचना', 'Ventilated Storage Chawl')}
+                      {tech.id === 'organic_jivamrit' && t('नैसर्गिक जिवाणू संवर्धन', 'Biological Soil Inoculant')}
+                    </span>
+                    <span className="px-1.5 py-0.5 bg-stone-900/80 rounded text-[10px] text-stone-200">
+                      {t('शेतकरी मार्गदर्शक', 'Farmer Guide')}
+                    </span>
+                  </div>
                 </div>
 
-                <h3 className="text-lg font-bold text-stone-900 leading-snug">
-                  {t(tech.titleMr, tech.titleEn)}
-                </h3>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-8 h-8 rounded-lg bg-white border border-stone-200 flex items-center justify-center shrink-0 shadow-xs">
+                    {getIcon(tech.id)}
+                  </div>
+                  <h3 className="text-base font-bold text-stone-900 leading-snug">
+                    {t(tech.titleMr, tech.titleEn)}
+                  </h3>
+                </div>
 
                 <p className="mt-1 text-xs font-semibold text-emerald-800">
                   {t(tech.taglineMr, tech.taglineEn)}

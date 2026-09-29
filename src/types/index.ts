@@ -6,6 +6,7 @@ export interface Crop {
   nameEn: string;
   scientificName: string;
   category: 'cash' | 'fruits' | 'vegetables' | 'grains' | 'spices';
+  imageUrl?: string;
   durationMr: string;
   durationEn: string;
   idealSeasonMr: string;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { CROPS_DATA } from '../data/agriData';
 import { Crop } from '../types';
+import { AgriIllustration } from './AgriIllustration';
 import { 
   Sprout, 
   Droplets, 
@@ -110,6 +111,24 @@ export const CropDirectory: React.FC<CropDirectoryProps> = ({ searchQuery }) => 
                 className="group relative bg-stone-50 hover:bg-white rounded-2xl border border-stone-200 hover:border-emerald-500/50 p-6 transition-all duration-200 hover:shadow-md flex flex-col justify-between"
               >
                 <div>
+                  {/* Real Crop Photography */}
+                  <div className="relative mb-4 overflow-hidden rounded-xl border border-stone-200 shadow-xs">
+                    <AgriIllustration 
+                      type={crop.id} 
+                      className="w-full h-44" 
+                      altText={`${t(crop.nameMr, crop.nameEn)} crop photo`} 
+                    />
+                    <div className="absolute top-2.5 left-2.5 z-10">
+                      <span className="text-xs font-semibold px-2.5 py-1 bg-stone-900/85 backdrop-blur-xs text-white rounded-md shadow-xs border border-white/10">
+                        {crop.category === 'cash' && t('नगदी पीक', 'Cash Crop')}
+                        {crop.category === 'fruits' && t('फळबाग', 'Fruit Crop')}
+                        {crop.category === 'vegetables' && t('भाजीपाला', 'Vegetable')}
+                        {crop.category === 'grains' && t('धान्य पीक', 'Grain')}
+                        {crop.category === 'spices' && t('मसाले पीक', 'Spices')}
+                      </span>
+                    </div>
+                  </div>
+
                   {/* Top line metadata (unboxed text) */}
                   <div className="flex items-center justify-between text-xs text-stone-500 mb-2">
                     <span className="font-medium text-emerald-800">
@@ -214,6 +233,29 @@ export const CropDirectory: React.FC<CropDirectoryProps> = ({ searchQuery }) => 
 
               {/* Modal Body */}
               <div className="p-6 sm:p-8 space-y-8">
+                {/* Visual Banner */}
+                <div className="flex flex-col sm:flex-row items-center gap-6 p-4 bg-stone-50 rounded-2xl border border-stone-200">
+                  <div className="w-full sm:w-56 shrink-0 rounded-xl overflow-hidden shadow-sm">
+                    <AgriIllustration 
+                      type={activeCrop.id} 
+                      className="w-full h-36 sm:h-40" 
+                      altText={t(activeCrop.nameMr, activeCrop.nameEn)}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider">
+                      {t('पीक परिचय व स्थानिक महत्त्व', 'Crop Profile & Pune Regional Context')}
+                    </span>
+                    <h4 className="text-lg font-bold text-stone-900 mt-0.5">
+                      {t(activeCrop.nameMr, activeCrop.nameEn)} ({activeCrop.scientificName})
+                    </h4>
+                    <p className="text-xs sm:text-sm text-stone-600 mt-1 leading-relaxed">
+                      <strong>{t('पुणे जिल्हा पट्टा: ', 'Pune Focus: ')}</strong>
+                      {t(activeCrop.puneFocusMr, activeCrop.puneFocusEn)}
+                    </p>
+                  </div>
+                </div>
+
                 {/* 1. Overview Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-emerald-50/60 rounded-xl border border-emerald-100">
                   <div>

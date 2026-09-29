@@ -45,6 +45,31 @@ export const ApmcDirectory: React.FC<ApmcDirectoryProps> = ({ searchQuery }) => 
     return matchesType && matchesTaluka && matchesQuery;
   });
 
+  const getMandiPhoto = (id: string) => {
+    switch (id) {
+      case 'pune_gultekdi':
+        return { img: '/images/mandi.jpg', badgeMr: 'पुणे मुख्य मार्केट यार्ड', badgeEn: 'Pune Central Market Yard' };
+      case 'narayangaon_junnar':
+        return { img: '/images/tomato.jpg', badgeMr: 'टोमॅटो प्रमुख लिलाव केंद्र', badgeEn: 'Premier Tomato Mandi' };
+      case 'manchar_ambegaon':
+        return { img: '/images/onion.jpg', badgeMr: 'कांदा व भाजीपाला लिलाव', badgeEn: 'Onion & Veggie Exchange' };
+      case 'chakan_khed':
+        return { img: '/images/onion.jpg', badgeMr: 'चाकण कांदा व बटाटा बाजार', badgeEn: 'Chakan Onion & Potato Hub' };
+      case 'baramati_apmc':
+        return { img: '/images/grapes.jpg', badgeMr: 'गुळ, द्राक्षे व शेतमाल केंद्र', badgeEn: 'Jaggery & Fruit Hub' };
+      case 'purandar_saswad':
+        return { img: '/images/fig.jpg', badgeMr: 'राजेवाडी अंजीर व सीताफळ', badgeEn: 'GI Fig & Custard Apple' };
+      case 'shirur_apmc':
+        return { img: '/images/bajra.jpg', badgeMr: 'बाजरी व धान्य लिलाव', badgeEn: 'Pearl Millet & Grain Mandi' };
+      case 'kvk_baramati':
+        return { img: '/images/drip.jpg', badgeMr: 'शेतकरी प्रशिक्षण व प्रयोग केंद्र', badgeEn: 'Agri Research & Training' };
+      case 'kvk_narayangaon':
+        return { img: '/images/pomegranate.jpg', badgeMr: 'भाजीपाला व फळबाग तंत्रज्ञान', badgeEn: 'Horticulture Tech Center' };
+      default:
+        return null;
+    }
+  };
+
   return (
     <section id="mandis" className="py-12 sm:py-16 bg-white border-b border-stone-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -122,12 +147,32 @@ export const ApmcDirectory: React.FC<ApmcDirectoryProps> = ({ searchQuery }) => 
 
         {/* Directory Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredItems.map((item) => (
+          {filteredItems.map((item) => {
+            const photoInfo = getMandiPhoto(item.id);
+            return (
             <div
               key={item.id}
-              className="bg-stone-50 rounded-2xl border border-stone-200 p-6 flex flex-col justify-between hover:shadow-md transition-shadow"
+              className="bg-stone-50 rounded-2xl border border-stone-200 p-6 flex flex-col justify-between hover:shadow-md transition-shadow group/card"
             >
               <div>
+                {/* Photo Banner if mapped */}
+                {photoInfo && (
+                  <div className="relative w-full h-32 mb-4 rounded-xl overflow-hidden border border-stone-200 shadow-xs bg-stone-900">
+                    <img
+                      src={photoInfo.img}
+                      alt={t(item.nameMr, item.nameEn)}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-stone-950/20 to-transparent pointer-events-none" />
+                    <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-xs text-white">
+                      <span className="font-semibold text-emerald-300 text-xs">
+                        {t(photoInfo.badgeMr, photoInfo.badgeEn)}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
                 {/* Type Header Tag */}
                 <div className="flex items-center justify-between text-xs text-stone-500 mb-2">
                   <span className="flex items-center gap-1 font-semibold text-emerald-800">
@@ -197,7 +242,8 @@ export const ApmcDirectory: React.FC<ApmcDirectoryProps> = ({ searchQuery }) => 
                 </a>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
